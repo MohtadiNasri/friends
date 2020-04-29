@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Friend {
@@ -21,6 +22,17 @@ public class Friend {
 
     @JsonIgnore
     private boolean married;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    List<Address> addresses;
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
 
     //    We commented this as we need a list of addresses instead of one
     //    @Embedded

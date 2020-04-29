@@ -1,11 +1,13 @@
 package com.wiredbrain.friends.model;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
-@Embeddable
+@Entity
 public class Address {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String street;
     private String city;
 
