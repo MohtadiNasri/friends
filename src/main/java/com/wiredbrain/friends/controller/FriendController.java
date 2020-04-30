@@ -25,7 +25,7 @@ public class FriendController {
 
     // Added the validation API Annotation to check empty field
     @PostMapping("/friend")
-    Friend create(@Valid @RequestBody Friend friend){
+    public Friend create(@Valid @RequestBody Friend friend){
        return friendService.save(friend);
     }
 
@@ -57,7 +57,7 @@ public class FriendController {
     //    }
 
     @GetMapping("/friend")
-    Iterable<Friend> read(){
+    public Iterable<Friend> read(){
         return friendService.findAll();
     }
 
@@ -77,7 +77,7 @@ public class FriendController {
     }
 
     @DeleteMapping("/friend/{id}")
-    void delete(@PathVariable Integer id){
+    public void delete(@PathVariable Integer id){
         friendService.deleteById(id);
     }
 
