@@ -2,6 +2,7 @@ package com.wiredbrain.friends.controller;
 
 import com.wiredbrain.friends.model.Friend;
 import com.wiredbrain.friends.services.FriendService;
+import com.wiredbrain.friends.util.ErrorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +25,6 @@ public class FriendController {
             return friendService.save(friend);
         else
             throw new ValidationException("friend cannot be created");
-    }
-
-    //Raised Exception in case of empty field
-    @ExceptionHandler(ValidationException.class)
-    ResponseEntity<String> exceptionHandler(ValidationException e){
-        return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
     }
 
     //    Commented to avoid saving empty field
