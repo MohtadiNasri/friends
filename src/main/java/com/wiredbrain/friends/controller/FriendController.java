@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ValidationException;
 import java.util.Optional;
 
 @RestController
@@ -15,16 +16,34 @@ public class FriendController {
     @Autowired
     FriendService friendService;
 
+
+    //If the new friend doesn't have a name, last name or an Id an Exception will be raised
     @PostMapping("/friend")
     Friend create(@RequestBody Friend friend){
-        return friendService.save(friend);
+        if(friend.getId()==0 && friend.getFirstName()!=null && friend.getLastName()!=null)
+            return friendService.save(friend);
+        else
+            throw new ValidationException("friend cannot be created");
     }
+
+    //Raised Exception in case of empty field
+    @ExceptionHandler(ValidationException.class)
+    ResponseEntity<String> exceptionHandler(ValidationException e){
+        return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
+    }
+
+    //    Commented to avoid saving empty field
+    //    @PostMapping("/friend")
+    //    Friend create(@RequestBody Friend friend){
+    //        return friendService.save(friend);
+    //    }
 
     @GetMapping("/friend")
     Iterable<Friend> read(){
         return friendService.findAll();
     }
 
+    //    Commented to avoid adding new friend if the id doesn't exist
     //    @PutMapping("/friend")
     //    Friend update(@RequestBody Friend friend){
     //        return friendService.save(friend);
